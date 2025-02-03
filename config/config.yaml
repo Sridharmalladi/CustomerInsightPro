@@ -1,0 +1,57 @@
+# config/config.yaml
+application:
+  name: CustomerInsightPro
+  version: 1.0.0
+  log_level: INFO
+  results_dir: results/
+
+database:
+  development:
+    host: localhost
+    port: 5432
+    database: customer_insights_dev
+    user: postgres
+    password: ${DB_PASSWORD}
+  
+  production:
+    host: ${DB_HOST}
+    port: ${DB_PORT}
+    database: ${DB_NAME}
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+models:
+  segmentation:
+    n_clusters: 5
+    features:
+      - total_spent
+      - purchase_frequency
+      - avg_transaction
+      - days_since_last_purchase
+  
+  prediction:
+    model_type: random_forest
+    parameters:
+      n_estimators: 100
+      max_depth: 10
+      random_state: 42
+    features:
+      - purchase_frequency
+      - avg_transaction
+      - days_since_last_purchase
+      - total_spent
+
+analysis:
+  min_data_points: 1000
+  date_range_days: 365
+  segment_labels:
+    - High Value
+    - Medium Value
+    - Low Value
+    - New Customers
+    - Churned
+  
+  performance_thresholds:
+    allocation_accuracy: 80.0
+    processing_time_limit: 5.0
+    prediction_accuracy: 85.0

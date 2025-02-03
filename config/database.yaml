@@ -1,0 +1,35 @@
+# config/database.yaml
+development:
+  host: localhost
+  port: 5432
+  database: customer_insights
+  user: postgres
+  password: ${DB_PASSWORD}
+
+production:
+  host: ${DB_HOST}
+  port: ${DB_PORT}
+  database: ${DB_NAME}
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
+
+# config/model_config.yaml
+customer_segmentation:
+  n_clusters: 5
+  features:
+    - total_spent
+    - purchase_frequency
+    - avg_transaction
+    - days_since_last_purchase
+
+prediction_model:
+  model_type: random_forest
+  parameters:
+    n_estimators: 100
+    max_depth: 10
+    random_state: 42
+  features:
+    - purchase_frequency
+    - avg_transaction
+    - customer_lifetime
+    - category_diversity
